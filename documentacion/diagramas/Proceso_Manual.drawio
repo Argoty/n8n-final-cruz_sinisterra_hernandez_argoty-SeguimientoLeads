@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-11-19T00:00:00.000Z" agent="opencode" version="24.7.7" type="device">
+  <diagram id="proceso-manual" name="Proceso Manual">
+    <mxGraphModel dx="1422" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1900" pageHeight="500" math="0" shadow="0" background="#0d0d0d">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t1" value="PROCESO MANUAL ACTUAL" style="text;html=1;align=left;verticalAlign=middle;fontSize=26;fontStyle=1;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="30" y="16" width="700" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="p1" value="Lead llega&lt;br&gt;(web, WhatsApp,&lt;br&gt;Telegram, teléfono)" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fillColor=#1f3a24;strokeColor=#5a8a5a;fontColor=#ffffff;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="40" y="170" width="250" height="92" as="geometry" />
+        </mxCell>
+        <mxCell id="r1" value="Asesor lee el mensaje&lt;br&gt;cuando puede" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#5c1a1a;strokeColor=#ff6b6b;fontColor=#ffffff;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="176" width="250" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="r2" value="Copia los datos a mano&lt;br&gt;a una hoja de cálculo" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#5c1a1a;strokeColor=#ff6b6b;fontColor=#ffffff;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="655" y="176" width="265" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="r3" value="Decide por intuición&lt;br&gt;si el lead es prioritario" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#5c1a1a;strokeColor=#ff6b6b;fontColor=#ffffff;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="975" y="176" width="255" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="d1" value="¿Alcanza a contactar&lt;br&gt;a tiempo?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#4a3414;strokeColor=#c08a2e;fontColor=#ffffff;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="132" width="205" height="168" as="geometry" />
+        </mxCell>
+        <mxCell id="g1" value="Contacta&lt;br&gt;al cliente" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#1f3a24;strokeColor=#5a8a5a;fontColor=#ffffff;fontSize=15;" vertex="1" parent="1">
+          <mxGeometry x="1600" y="36" width="245" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="r4" value="Lead se enfría&lt;br&gt;y se pierde" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#5c1a1a;strokeColor=#ff6b6b;fontColor=#ffffff;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1600" y="332" width="255" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="lg" value="Rojo = punto de dolor del proceso manual" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#ff6b6b;fontColor=#ffffff;fontSize=15;" vertex="1" parent="1">
+          <mxGeometry x="40" y="418" width="475" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="html=1;endArrow=blockThin;endFill=1;strokeColor=#cccccc;strokeWidth=2;fontColor=#ffffff;fontSize=15;" edge="1" parent="1" source="p1" target="r1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="html=1;endArrow=blockThin;endFill=1;strokeColor=#cccccc;strokeWidth=2;fontColor=#ffffff;fontSize=15;" edge="1" parent="1" source="r1" target="r2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" style="html=1;endArrow=blockThin;endFill=1;strokeColor=#cccccc;strokeWidth=2;fontColor=#ffffff;fontSize=15;" edge="1" parent="1" source="r2" target="r3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" style="html=1;endArrow=blockThin;endFill=1;strokeColor=#cccccc;strokeWidth=2;fontColor=#ffffff;fontSize=15;" edge="1" parent="1" source="r3" target="d1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="Sí" style="html=1;endArrow=blockThin;endFill=1;strokeColor=#cccccc;strokeWidth=2;fontColor=#ffffff;fontSize=15;" edge="1" parent="1" source="d1" target="g1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="No" style="html=1;endArrow=blockThin;endFill=1;strokeColor=#cccccc;strokeWidth=2;fontColor=#ffffff;fontSize=15;" edge="1" parent="1" source="d1" target="r4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
