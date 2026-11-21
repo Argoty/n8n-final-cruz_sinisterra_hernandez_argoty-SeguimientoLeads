@@ -336,19 +336,17 @@ El componente se implementa con los nodos LangChain de n8n:
 - `Google Gemini Chat Model` (`lmChatGoogleGemini`), como modelo de lenguaje.
 - `Agente de captación de leads` (`agent`), como nodo de agente que orquesta el modelo y la memoria.
 
-El nodo `Google Gemini Chat Model` no declara parámetros de modelo en su configuración. El nodo no declara modelo ni temperatura explícitos: usa la configuración por defecto del nodo y de la instancia.
-
-<!-- PENDIENTE: confirmar modelo exacto y temperatura en la instancia -->
+El nodo `Google Gemini Chat Model` hace uso del modelo gemini-3-flash-preview
 
 Los parámetros del nodo de agente son:
 
-| Parámetro | Valor | Efecto |
-|---|---|---|
-| `promptType` | `define` | El texto de entrada se define en el propio nodo, no se toma de un nodo anterior como plantilla |
-| `text` | `$('Webhook Telegram').first().json.body.message.text ?? ''` | Envía al modelo el texto del mensaje recibido |
-| `maxIterations` | 4 | Limita a cuatro las iteraciones del agente |
-| `returnIntermediateSteps` | `true` | Devuelve los pasos intermedios en la salida |
-| `enableStreaming` | `false` | Desactiva la transmisión por partes |
+| Parámetro                 | Valor                                                        | Efecto                                                                                         |
+| ------------------------- | ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| `promptType`              | `define`                                                     | El texto de entrada se define en el propio nodo, no se toma de un nodo anterior como plantilla |
+| `text`                    | `$('Webhook Telegram').first().json.body.message.text ?? ''` | Envía al modelo el texto del mensaje recibido                                                  |
+| `maxIterations`           | 4                                                            | Limita a cuatro las iteraciones del agente                                                     |
+| `returnIntermediateSteps` | `true`                                                       | Devuelve los pasos intermedios en la salida                                                    |
+| `enableStreaming`         | `false`                                                      | Desactiva la transmisión por partes                                                            |
 
 ### 3.3 Instrucciones del agente
 
@@ -589,28 +587,17 @@ El resultado es un workflow de 21 nodos y 23 conexiones con un único disparador
 
 ### 4.2 Resultados de las pruebas
 
-| Caso | Resultado observado | Conclusión | Evidencia |
-|---|---|---|---|
-| CP-01 | PENDIENTE | PENDIENTE | PENDIENTE |
-| CP-02 | PENDIENTE | PENDIENTE | PENDIENTE |
-| CP-03 | PENDIENTE | PENDIENTE | PENDIENTE |
-| CP-04 | PENDIENTE | PENDIENTE | PENDIENTE |
-| CP-05 | PENDIENTE | PENDIENTE | PENDIENTE |
-| CP-06 | PENDIENTE | PENDIENTE | PENDIENTE |
-| CP-07 | PENDIENTE | PENDIENTE | PENDIENTE |
-| CP-08 | PENDIENTE | PENDIENTE | PENDIENTE |
-| CP-09 | PENDIENTE | PENDIENTE | PENDIENTE |
-| CP-10 | PENDIENTE | PENDIENTE | PENDIENTE |
-| CP-11 | PENDIENTE | PENDIENTE | PENDIENTE |
-| CP-12 | PENDIENTE | PENDIENTE | PENDIENTE |
-| CP-13 | PENDIENTE | PENDIENTE | PENDIENTE |
-| CP-14 | PENDIENTE | PENDIENTE | PENDIENTE |
+Se ejecutaron tres pruebas manuales contra el bot de Telegram Inmonova_bot el 2026-11-20. Cada una cuenta con la captura del chat, la captura de la salida del nodo `Confirmar registro al chat` o `Responder conversación al chat` y la captura del canvas con los nodos ejecutados. Los casos se numeran de nuevo y ya no corresponden a CP-01 a CP-14 de la bitácora.
 
-<!-- PENDIENTE: completar con resultados observados, conclusión y nombre de archivo de evidencia de cada caso -->
+| Caso                                           | Entrada                                                                                                                                                                                                   | Resultado observado                                                                                                                                                                                                                                                                                                            | Conclusión                                                                                                                               | Evidencia                                                                                                   |
+| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| CP-01 Lead con correo empresarial              | `hola, soy kas, me interesa rentar una propiedad lo antes posible por medio de su empresa, mi correo es kas.test@eam.edu.co`                                                                              | El agente extrajo nombre `kas`, correo `kas.test@eam.edu.co`, `interes` ALTO y un resumen de la necesidad. El flujo asignó `es_empresarial` verdadero y la acción `Notificacion inmediata`. Baserow creó la fila con id 82 y `canal` Telegram. El bot confirmó el registro en el chat. En la fila, `formMode` quedó en `test`. | Cumple. El recorrido ALTO y correo empresarial funciona de extremo a extremo. Queda la salvedad del valor de `formMode`, descrita abajo. | `CORREO_EMPRESARIAL_Chat.png`, `CORREO_EMPRESARIAL_Output.png`, `CORREO_EMPRESARIAL_Workflow.png`           |
+| CP-02 Lead con correo personal e interés medio | `me llamo oha, quiero informacion para rentar un apartamento, mi correo es jt1960402@gmail.com, de momento solo estoy buscando opciones sin una decision clara pero esta empresa es mi opcion mas fuerte` | El agente extrajo nombre `oha`, correo `jt1960402@gmail.com`, `interes` MEDIO y un resumen de la necesidad. El flujo asignó `es_empresarial` falso y la acción `Registrar seguimiento en 2 o 3 dias`. Baserow creó la fila con id 81 y `canal` Telegram. El bot confirmó el registro. En la fila, `formMode` quedó en `test`.  | Cumple. El recorrido MEDIO y correo personal funciona de extremo a extremo, con la misma salvedad de `formMode`.                         | `CORREO_NO_EMPRESARIAL_Chat.png`, `CORREO_NO_EMPRESARIAL_Output.png`, `CORREO_NO_EMPRESARIAL_Worfkflow.png` |
+| CP-03 Datos incompletos                        | `hola`                                                                                                                                                                                                    | El agente devolvió `estado` recopilando y pidió el nombre. `Contrato completo?` tomó la salida falsa y `Responder conversación al chat` envió la pregunta al chat correcto. En el canvas no se ejecutó ningún nodo de clasificación ni de guardado.                                                                            | Cumple. Un mensaje sin datos no genera registro y el cliente recibe una pregunta de seguimiento.                                         | `DATOS_INCOMPLETOS_Chat.png`, `DATOS_INCOMPLETOS_Output.png`, `DATOS_INCOMPLETOS_Workflow.png`              |
 
-Esta sección se completará con los resultados de los casos CP-01 a CP-14 definidos en la bitácora de la clase 11, disponible en [Bitacora_Clase_11_Pruebas.md](../pruebas/Bitacora_Clase_11_Pruebas.md). Las capturas y archivos de soporte se ubicarán en la carpeta [evidencias](../pruebas/evidencias/).
+Observación sobre `formMode`: en CP-01 y CP-02 la entrada del nodo de confirmación muestra `formMode` con valor `test`, mientras que en CP-03 el nodo `Parsear mensaje` entrega `telegram`. Esto indica que el guardado no usa el valor calculado por el sistema. Se registra como limitación en la sección 4.3.
 
-Al cierre de este documento las pruebas no se han ejecutado; no se afirma el funcionamiento end-to-end del proceso. La descripción de las secciones 1 a 3 corresponde al diseño implementado y verificable en el archivo del workflow, no a un comportamiento medido en ejecución.
+Estas tres pruebas respaldan el recorrido exitoso con interés ALTO y MEDIO, la clasificación del correo empresarial y personal, la confirmación al chat y la respuesta a datos incompletos. No se ejecutaron pruebas de conversación de varios turnos, interés BAJO, correos con formato inválido, mensajes sin texto, leads repetidos, fallo de Baserow, fallo de Gemini ni acceso al webhook sin autenticación. Para esos escenarios no se afirma comportamiento medido: la descripción de las secciones 1 a 3 corresponde al diseño implementado en el archivo del workflow.
 
 ### 4.3 Pendientes y limitaciones conocidas
 
